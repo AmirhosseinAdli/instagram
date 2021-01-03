@@ -14,6 +14,8 @@ Route::group([
 ],function () {
     Route::get('register', [AuthController::class, 'showRegister'])->name('showRegister');
     Route::post('sendcode', [AuthController::class, 'sendCode'])->name('sendCode');
-//    Route::get('entercode', [AuthController::class])->name('enterCode');
     Route::post('register', [AuthController::class, 'register'])->name('register');
+    Route::get('login', [AuthController::class, 'showLogin'])->name('showLogin');
+    Route::post('login', [AuthController::class, 'Login'])->name('login');
+    Route::get('logout', [AuthController::class, 'logout'])->name('logout');
 });

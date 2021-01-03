@@ -2,14 +2,19 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CodeRequest;
+use App\Http\Requests\LoginRequest;
+use App\Http\Requests\RegisterRequest;
 use App\Jobs\RegisterEmailCodeJob;
 use App\Mail\RegisterCodeEmail;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 use \Illuminate\Support\Facades\Cache;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Validator;
 
 class AuthController extends Controller
 {
@@ -21,7 +26,7 @@ class AuthController extends Controller
             return redirect()->back();
     }
 
-    public function sendCode(Request $request)
+    public function sendCode(RegisterRequest $request)
     {
         $code = rand(100000,999999);
         Log::info("$request->moe: $code");
@@ -33,7 +38,7 @@ class AuthController extends Controller
         return view('auth.enterCode',compact('request'));
     }
 
-    public function register(Request $request)
+    public function register(CodeRequest $request)
     {
         $cacheCode = Cache::get($request->moe);
         if ($cacheCode = null || $cacheCode != $request->code)
@@ -48,17 +53,36 @@ class AuthController extends Controller
         else
             $informations['mobile'] = $request->moe;
 
-        User::create($informations);
-
+        $user = User::create($informations);
+        Auth::login($user);
+        return view('auth.home');
     }
 
-    public function login()
+    public function showLogin()
     {
+        if (!\auth()->check())
+            return view('auth.login');
+        return redirect()->back();
+    }
 
+    public function login(LoginRequest $request)
+    {
+        $user = User::where('email',$request->meu)
+            ->orWhere('mobile',$request->meu)
+            ->orWhere('username',$request->meu);
+        if ($user->exists()){
+            if (Hash::check($request->password,$user->first()->getAuthPassword()))
+            {
+                Auth::login($user->first());
+                return view('auth.home');
+            }
+        }
+        return redirect()->back();
     }
 
     public function logout()
     {
-
+        \auth()->logout();
+        return 'logout';
     }
 }

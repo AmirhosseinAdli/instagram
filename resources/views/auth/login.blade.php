@@ -18,14 +18,11 @@
             </ul>
         </div>
     @endif
-    <form action="{{route('auth.sendCode')}}" method="post">
+    <form action="{{route('auth.login')}}" method="post">
         @csrf
-        mobile number or email: <input type="text" name="moe"><br><br>
-        full name: <input type="text" name="full_name"><br><br>
-        username: <input type="text" name="username"><br><br>
+        mobile number or email or username: <input type="text" name="meu"><br><br>
         password: <input type="password" name="password"><br><br>
-        birthdate: <input type="date" name="birthdate"><br><br>
-        <button type="submit">Next</button>
+        <button type="submit">Login</button>
     </form>
 </div>
 </body>
