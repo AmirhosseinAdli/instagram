@@ -2,7 +2,9 @@ profile of {{$user->username}}<br><br>
 <ul>
 @forelse($user->posts as $post)
     <li>
-        <img src="{{$post->medias[0]->url}}">
+        @foreach($post->medias as $media)
+            <a href="{{route('posts.show',$post)}}"><img src="{{$media->url}}"></a>
+        @endforeach
     </li>
 @empty
     No Posts

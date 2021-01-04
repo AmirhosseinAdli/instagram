@@ -3,9 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\Media;
+use App\Models\Mention;
 use App\Models\Post;
 use App\Models\Story;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
 class PostController extends Controller
@@ -44,6 +47,18 @@ class PostController extends Controller
             'link' => $link,
             'user_id' => auth()->id(),
         ]);
+        if ($request->has('mention')){
+            $user = substr($request->mention,1);
+            $user_id = User::where('username',$user)->first()->id;
+            $mention = Mention::create([
+                'user_id' => $user_id,
+            ]);
+            DB::table('mentionables')->insert([
+                'mention_id' => $mention->id,
+                'mentionable_id' => $post->id,
+                'mentionable_type' => Post::class,
+            ]);
+        }
         $path = $request->file('media')->storePublicly('posts');
         Media::create([
             'path' => $path,
@@ -57,11 +72,11 @@ class PostController extends Controller
      * Display the specified resource.
      *
      * @param  \App\Models\Post  $post
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
     public function show(Post $post)
     {
-        //
+        return view('posts.show',compact('post'));
     }
 
     /**

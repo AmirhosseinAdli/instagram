@@ -1,11 +1,11 @@
 <?php
 
-use App\Models\User;
+use App\Models\Mention;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateMentionsTable extends Migration
+class CreateMentionablesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,12 +14,14 @@ class CreateMentionsTable extends Migration
      */
     public function up()
     {
-        Schema::create('mentions', function (Blueprint $table) {
+        Schema::create('mentionables', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(User::class)
+            $table->foreignIdFor(Mention::class)
                 ->references('id')
-                ->on('users')
+                ->on('mentions')
                 ->cascadeOnDelete();
+            $table->integer('mentionable_id');
+            $table->string('mentionable_type');
             $table->timestamps();
         });
     }
@@ -31,6 +33,6 @@ class CreateMentionsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('mentions');
+        Schema::dropIfExists('mentionables');
     }
 }

@@ -23,4 +23,9 @@ class Post extends Model
     {
         return $this->morphMany(Media::class,'mediaable');
     }
+
+    public function mentions()
+    {
+        return $this->morphToMany(Mention::class,'mentionable');
+    }
 }
