@@ -55,7 +55,7 @@ class AuthController extends Controller
 
         $user = User::create($informations);
         Auth::login($user);
-        return view('auth.home');
+        return redirect()->route('profile',$user);
     }
 
     public function showLogin()
@@ -74,7 +74,7 @@ class AuthController extends Controller
             if (Hash::check($request->password,$user->first()->getAuthPassword()))
             {
                 Auth::login($user->first());
-                return view('auth.home');
+                return redirect()->route('profile',\auth()->user());
             }
         }
         return redirect()->back();

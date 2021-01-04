@@ -30,6 +30,21 @@ class User extends Authenticatable
         'password',
     ];
 
+    public function posts()
+    {
+        return $this->hasMany(Post::class);
+    }
+
+    public function stories()
+    {
+        return $this->hasMany(Story::class);
+    }
+
+    public function media()
+    {
+        return $this->morphOne(Media::class,'mediaable');
+    }
+
     /**
      * The attributes that should be hidden for arrays.
      *

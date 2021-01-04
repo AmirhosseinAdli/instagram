@@ -28,7 +28,7 @@ class LoginRequest extends FormRequest
             'password' => 'required|string|min:6'
         ];
         if (str_contains($request->meu,'@'))
-            $arr['meu'] = 'required|email|unique:users,email';
+            $arr['meu'] = 'required|email';
         else
             $arr['meu'] = 'required|string|min:6';
         return $arr;

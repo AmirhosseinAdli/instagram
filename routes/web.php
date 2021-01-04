@@ -1,12 +1,15 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\PostController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\StoryController;
+use App\Models\Post;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
 });
-
 
 Route::group([
     'prefix' => 'auth',
@@ -19,3 +22,8 @@ Route::group([
     Route::post('login', [AuthController::class, 'Login'])->name('login');
     Route::get('logout', [AuthController::class, 'logout'])->name('logout');
 });
+
+Route::middleware('auth')->get('/{user:username}',[ProfileController::class,'profile'])->name('profile');
+
+Route::middleware('auth')->resource('posts',PostController::class);
+Route::middleware('auth')->resource('stories',StoryController::class);
