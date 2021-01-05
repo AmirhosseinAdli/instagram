@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\StoryController;
@@ -27,3 +28,4 @@ Route::middleware('auth')->get('/{user:username}',[ProfileController::class,'pro
 
 Route::middleware('auth')->resource('posts',PostController::class);
 Route::middleware('auth')->resource('stories',StoryController::class);
+Route::middleware('auth')->resource('comments',CommentController::class);

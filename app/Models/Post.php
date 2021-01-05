@@ -28,4 +28,9 @@ class Post extends Model
     {
         return $this->morphToMany(Mention::class,'mentionable');
     }
+
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
 }

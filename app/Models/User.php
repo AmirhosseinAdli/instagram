@@ -45,6 +45,11 @@ class User extends Authenticatable
         return $this->morphOne(Media::class,'mediaable');
     }
 
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
+
     /**
      * The attributes that should be hidden for arrays.
      *
