@@ -16,6 +16,8 @@ class Comment extends Model
         'post_id',
     ];
 
+    protected $with = ['comments'];
+
     public function user()
     {
         return $this->belongsTo(User::class);
@@ -24,5 +26,10 @@ class Comment extends Model
     public function post()
     {
         return $this->belongsTo(Post::class);
+    }
+
+    public function comments()
+    {
+        return $this->hasMany(Comment::class,'p_id');
     }
 }

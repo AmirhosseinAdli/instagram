@@ -74,6 +74,7 @@ echo $result;
         <div class="col-md-8">
             <div class="d-flex flex-column comment-section">
                 @forelse($post->comments as $key => $comment)
+                    @if($comment->p_id==null)
                 <div class="bg-white p-2">
                     <div class="d-flex flex-row user-info"><img class="rounded-circle" src="" width="40">
                         <div class="d-flex flex-column justify-content-start ml-2"><span class="d-block font-weight-bold name">{{$comment->user->username}}</span><span class="date text-black-50">Shared publicly - {{$comment->created_at}}</span></div>
@@ -94,6 +95,31 @@ echo $result;
                         <div class="like p-2 cursor"><i class="fa fa-share"></i><span class="ml-1">Share</span></div>
                     </div>
                 </div>
+                        @foreach($comment->comments as $key2 => $sub_comment)
+                            <div>
+                            <div class="bg-white p-2">
+                                <div class="d-flex flex-row user-info"><img class="rounded-circle" src="" width="40">
+                                    <div class="d-flex flex-column justify-content-start ml-2"><span class="d-block font-weight-bold name">{{$sub_comment->user->username}}</span><span class="date text-black-50">Shared publicly - {{$comment->created_at}}</span></div>
+                                </div>
+                                <div class="mt-2">
+                                    <p class="comment-text">{{$sub_comment->content}}</p>
+                                </div>
+                            </div>
+                            <div class="bg-white">
+                                <div class="d-flex flex-row fs-12">
+                                    <div class="like p-2 cursor"><i class="fa fa-thumbs-o-up"></i><span class="ml-1">Like</span></div>
+                                    <form action="{{route('comments.store')}}" method="post">
+                                        @csrf
+                                        <input type="hidden" name="p_id" value="{{$sub_comment->id}}">
+                                        <input type="hidden" name="post_id" value="{{$post->id}}">
+                                        <div class="like p-2 cursor" id="reply{{$key2}}" onclick="reply{{$key2}}()"><i class="fa fa-reply"></i><span class="ml-1">Reply</span></div>
+                                    </form>
+                                    <div class="like p-2 cursor"><i class="fa fa-share"></i><span class="ml-1">Share</span></div>
+                                </div>
+                            </div>
+                        @endforeach
+
+                    @endif
                 @empty
                     No Comments yet
                 @endforelse
