@@ -1,14 +1,15 @@
-profile of {{$user->username}}<br><br>
-<ul>
-@forelse($user->posts as $post)
-    <li>
-{{--        @foreach($post->medias as $media)--}}
-{{--            <a href="{{route('posts.show',$post)}}"><img src="{{$media->url}}"></a>--}}
-{{--        @endforeach--}}
+@extends('layouts.pages')
+@section('content')
 
-        <img src="{{$post->medias()->first()?->url}}" alt="{{$post->id}}">
-    </li>
-@empty
-    No Posts
-@endforelse
-</ul>
+        <div class="card-columns">
+            @forelse($user->posts as $post)
+                <a href="{{route('posts.show',$post)}}">
+                    <div class="card m-3">
+                        <img class="card-img-top" src="{{$post->medias()->first()?->url}}">
+                    </div>
+                </a>
+            @empty
+                No Posts Yet
+            @endforelse
+        </div>
+@endsection

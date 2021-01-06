@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CreatePostRequest;
 use App\Models\Media;
 use App\Models\Mention;
 use App\Models\Post;
@@ -39,7 +40,7 @@ class PostController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(Request $request)
+    public function store(CreatePostRequest $request)
     {
         while (Post::where('link',$link = env('APP_URL') . '/p/' . Str::random(40))->first());
         $post = Post::create([
