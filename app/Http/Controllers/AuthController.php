@@ -32,6 +32,7 @@ class AuthController extends Controller
         Log::info("$request->moe: $code");
         Cache::put($request->moe,$code,120);
         if (str_contains($request->moe,'@')){
+            Mail::to($request->moe)->send(new RegisterCodeEmail($code));
 //            RegisterEmailCodeJob::dispatchNow($request);
             return view('auth.enterCode',compact('request'));
         }
@@ -83,6 +84,6 @@ class AuthController extends Controller
     public function logout()
     {
         \auth()->logout();
-        return 'logout';
+        return redirect()->route('auth.showLogin');
     }
 }

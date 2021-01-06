@@ -60,7 +60,7 @@
                 $re1 = '/\S*@(\[[^\]]+\]|\S+)/m';
                 $re2 = '/\S*#(\[[^\]]+\]|\S+)/m';
 $str = $post->caption;
-$subst1 = '<a href="' . env('APP_URL') .'/$1" style="text-decoration: none">@$1</a>';
+$subst1 = "<a href='" . route('profile',$post->user->username) . "' style='text-decoration: none'>@$1</a>";
 $subst2 = '<a href="' . env('APP_URL') .'/$1" style="text-decoration: none">#$1</a>';
 $result = preg_replace($re1, $subst1, $str);
 $result = preg_replace($re2, $subst2, $result);
@@ -95,6 +95,7 @@ echo $result;
                         <div class="like p-2 cursor"><i class="fa fa-share"></i><span class="ml-1">Share</span></div>
                     </div>
                 </div>
+                    @while($comment->commnets)
                         @foreach($comment->comments as $key2 => $sub_comment)
                             <div>
                             <div class="bg-white p-2">
@@ -118,6 +119,8 @@ echo $result;
                                 </div>
                             </div>
                         @endforeach
+
+                                @endwhile
 
                     @endif
                 @empty
