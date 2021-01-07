@@ -26,7 +26,7 @@ class CreatePostRequest extends FormRequest
         return [
             'media' => 'required|file',
             'caption' => 'sometimes|nullable|string|max:255',
-            'mentions' => 'nullable|sometimes|string'
+            'mention' => 'nullable|sometimes|string'
         ];
     }
 }

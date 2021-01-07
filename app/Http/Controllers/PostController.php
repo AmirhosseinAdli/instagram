@@ -48,7 +48,7 @@ class PostController extends Controller
             'link' => $link,
             'user_id' => auth()->id(),
         ]);
-        if ($request->has('mention')){
+        if ($request->mention != null){
             $user = substr($request->mention,1);
             $user_id = User::where('username',$user)->first()->id;
             $mention = Mention::create([
