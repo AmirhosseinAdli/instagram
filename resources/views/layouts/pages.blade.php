@@ -16,7 +16,7 @@
 </head>
 <body>
 <div class="container">
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
+<nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
     <div class="col-md-4">
     <a class="navbar-brand" href="#"><img src="{{asset('img/insta.png')}}" alt=""></a>
     </div>
@@ -43,19 +43,16 @@
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
                    aria-haspopup="true" aria-expanded="false">
-                    <img src="{{auth()->user()->media?->url}}" alt="">
+                    <img class="rounded-circle" style="width: 25px;height: 25px" src="{{auth()->user()->profilePicture?->url}}">
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                     <a class="dropdown-item" href="{{route('profile',auth()->user())}}">Profile</a>
                     <a class="dropdown-item" href="#">Saved</a>
-                    <a class="dropdown-item" href="#">Settings</a>
+                    <a class="dropdown-item" href="{{route('settings')}}">Settings</a>
                     <a class="dropdown-item" href="#">Switch Accounts</a>
                     <div class="dropdown-divider"></div>
                     <a class="dropdown-item" href="{{route('auth.logout')}}">Log Out</a>
                 </div>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link disabled" href="#">Disabled</a>
             </li>
         </ul>
     </div>

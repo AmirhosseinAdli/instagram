@@ -29,6 +29,8 @@ Route::group([
 Route::group([
     'middleware' => 'auth'
 ],function (){
+    Route::get('settings',[SettingController::class,'show'])->name('settings');
+    Route::post('settings',[SettingController::class,'update'])->name('update');
     Route::get('/{user:username}', [ProfileController::class, 'profile'])->name('profile');
     Route::resource('posts', PostController::class);
     Route::resource('stories', StoryController::class);
@@ -37,5 +39,4 @@ Route::group([
     Route::get('following/{user:username}',[RelationController::class,'following'])->name('following');
     Route::post('follow/{user}',[RelationController::class,'follow'])->name('follow');
     Route::post('unfollow/{user}',[RelationController::class,'unfollow'])->name('unfollow');
-    Route::post('settings',[SettingController::class,'show'])->name('settings');
 });

@@ -11,10 +11,10 @@
             </div>
         @endif
         <div class="d-flex flex-row">
+        <div class=" shadow-sm bg-white border border-light rounded text-center px-5 w-100">
             <div>
                 <img src="{{asset('img/phone.jpg')}}" class="rounded" style="width: 300px;height: 300px">
             </div>
-        <div class=" shadow-sm bg-white border border-light rounded text-center px-5 w-100">
             <div class="text-center p-2 pb-4">
                 <img src="{{asset('img/instagram-new-logo.png')}}" style="width: 200px">
             </div>

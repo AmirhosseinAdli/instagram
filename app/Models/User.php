@@ -59,9 +59,9 @@ class User extends Authenticatable
         return $this->hasMany(Story::class);
     }
 
-    public function media()
+    public function profilePicture()
     {
-        return $this->morphOne(Media::class, 'mediaable');
+        return $this->hasOne(ProfilePicture::class,'user_id');
     }
 
     public function comments()
