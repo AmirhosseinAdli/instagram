@@ -2,7 +2,7 @@
 @section('content')
     <div class="d-flex flex-row mt-4 border-bottom">
         <div class="col-md-4">
-            <img class="rounded-circle" style="width: 90px;height: 90px" src="{{$user->profilePicture?->url}}">
+            <a href="#"><img class="rounded-circle" style="width: 90px;height: 90px" src="{{$user->profilePicture?->url}}"></a>
         </div>
         <div class="col-md-6">
             <div class="d-flex flex-row">
@@ -62,23 +62,43 @@
                 ->where('follower_id',1)
                 ->where('followed_id',2)
                 ->where('is_accepted',1)->first() != null)
-                    <div>
-                        <div>
+                    <div class="d-flex flex-row">
+                    <div class="d-flex flex-row">
+                        <div class="mr-2">
                             {{$user->posts()->count()}} posts
                         </div>
-                        <div>
+                        <div class="mx-2">
                             <a href="{{route('followers',$user)}}">{{$followers}} followers</a>
                         </div>
-                        <div>
+                        <div class="mx-2">
                             <a href="{{route('following',$user)}}">{{$following}} following</a>
                         </div>
+                    </div>
+                <div>
+                    <form action="{{route('settings')}}" method="get">
+                        @csrf
+                        <button type="submit" class="btn btn-default"
+                                style="border: 1px solid rgba(var(--ca6,219,219,219),1);">Edit Profile
+                        </button>
+                    </form>
+                </div>
                     </div>
 
                     <br>
                     {{$user->bio}}<br>
             </div>
             @else
-                {{$user->posts()->count()}} posts  {{$followers}} followers  {{$following}} following<br>
+                <div class="d-flex flex-row">
+                    <div class="mr-2">
+                        {{$user->posts()->count()}} posts
+                    </div>
+                    <div class="mx-2">
+                        {{$followers}} followers
+                    </div>
+                    <div class="mx-2">
+                        {{$following}} following
+                    </div>
+                </div><br>
                 {{$user->bio}}
             @endif
         </div>

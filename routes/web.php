@@ -2,6 +2,9 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CommentController;
+use App\Http\Controllers\ExploreController;
+use App\Http\Controllers\MainController;
+use App\Http\Controllers\PictureController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RelationController;
@@ -29,6 +32,8 @@ Route::group([
 Route::group([
     'middleware' => 'auth'
 ],function (){
+    Route::get('explore',[ExploreController::class,'explore'])->name('explore');
+    Route::get('main',[MainController::class,'main'])->name('main');
     Route::get('settings',[SettingController::class,'show'])->name('settings');
     Route::post('settings',[SettingController::class,'update'])->name('update');
     Route::get('/{user:username}', [ProfileController::class, 'profile'])->name('profile');
@@ -39,4 +44,5 @@ Route::group([
     Route::get('following/{user:username}',[RelationController::class,'following'])->name('following');
     Route::post('follow/{user}',[RelationController::class,'follow'])->name('follow');
     Route::post('unfollow/{user}',[RelationController::class,'unfollow'])->name('unfollow');
+
 });
